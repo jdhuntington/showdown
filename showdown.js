@@ -384,6 +384,9 @@ var _RunSpanGamut = function(text) {
 	text = _DoImages(text);
 	text = _DoAnchors(text);
 
+        // WIKINESS!!
+        text = _DoWikiAnchors(text);
+
 	// Make links out of things like `<http://example.com/>`
 	// Must come after _DoAnchors(), because you can use < and >
 	// delimiters in inline links like [this](<url>).
@@ -415,6 +418,17 @@ var _EscapeSpecialCharsWithinTagAttributes = function(text) {
 
 	return text;
 }
+
+var _TitleToWikiLink = function (title) {
+  return title.replace(/\W/g, '').toLowerCase();
+};
+
+var _DoWikiAnchors = function(text) {
+  text = text.replace(/\[\[([^\[]*)\]\]/g, function(wholeMatch, title) {
+    return '<a href="' + _TitleToWikiLink(title) + '?title=' + encodeURI(title) + '">' + title + '</a>';
+  });
+  return text;
+};
 
 var _DoAnchors = function(text) {
 //

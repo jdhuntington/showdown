@@ -4,7 +4,7 @@ describe("Showdown", function() {
     return showdown.makeHtml(str);
   };
 
-  $(['simple.html']).each(function(){
+  $(['simple.html', 'wiki_links.html', 'wiki_2_links.html']).each(function(){
     var that = this;
 
     it('should render ' + this + ' as expected', function(){
